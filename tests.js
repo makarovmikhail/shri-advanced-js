@@ -1,4 +1,4 @@
-const MySet = require("./index");
+const MySet = require("./solution/index.js");
 
 // тесты
 const set = new MySet([4, 8, 15, 15, 16, 23, 42]);
