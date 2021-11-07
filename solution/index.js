@@ -39,13 +39,10 @@ module.exports = class {
   has(item) {
     return this._set.includes(item);
   }
-  forEach(...args) {
-    const cb = args[0];
-    const data = args.slice(1) ?? this;
-
-    this._set.forEach((item) => {
-      cb.call(data, item, this);
-    });
+  forEach(callbackfn, thisArg) {
+    for (let item of this) {
+      callbackfn.call(thisArg ?? this, item, item);
+    }
   }
   keys() {
     return this._set.values();
@@ -54,6 +51,6 @@ module.exports = class {
     return this._set.values();
   }
   get [Symbol.toStringTag]() {
-    return "SET";
+    return "^_^";
   }
 };
