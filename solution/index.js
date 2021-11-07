@@ -15,8 +15,10 @@ module.exports = class {
       next: () => ({value: data[++index], done: !(index in data)})
     };
   }
-  entries() {
-    return this._set;
+  *entries() {
+    for (let item of this._set) {
+      yield [item, item];
+    }
   }
   clear() {
     this._set = [];
@@ -39,16 +41,19 @@ module.exports = class {
   }
   forEach(...args) {
     const cb = args[0];
-    const data = args.slice(1);
+    const data = args.slice(1) ?? this;
 
-    this._set.forEach((s) => {
-      cb.call(data, s);
+    this._set.forEach((item) => {
+      cb.call(data, item, this);
     });
   }
   keys() {
-    return this.entries();
+    return this._set.values();
   }
   values() {
-    return this.entries();
+    return this._set.values();
+  }
+  get [Symbol.toStringTag]() {
+    return "SET";
   }
 };
